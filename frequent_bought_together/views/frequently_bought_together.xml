@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="frequently_bought_together_templates" name="Frequently Bought Together">
+        <section class="frequently_bought_together_options">
+            <div class="container">
+                <t t-call="frequent_bought_together.first_dynamic_template"/>
+            </div>
+        </section>
+    </template>
+
+    <template id="first_dynamic_template" name="Frequently Bought Together Template" groups="base.group_user">
+        <div class="container">
+            <div id="products--row" class="row row-cols-2 row-cols-md-6">
+              
+            </div>
+        </div>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                let product_id = null;
+                let input = document.querySelector('.js_product.js_main_product.mb-3 .product_id');
+
+                if (input) {
+                    product_id = input.value;
+                } else {
+                    console.error('Input element with class "product_id" not found inside the parent div.');
+                }
+
+                if (product_id) {
+                    fetch('/get/frequently_bought_together', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ product_id: product_id }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        
+                        if (data.result.sale_orders) {
+                            let productsRow = document.getElementById('products--row');
+                            
+                            const saleOrdersType = typeof data.result.sale_orders;
+                            const dataResult = Object.entries(data.result.sale_orders)
+                            let count = 0
+                            dataResult.forEach(product => {
+                                
+                                product = product[1]
+                                
+                                if(product.id){
+                                     console.log('product', product.id);
+                                     let productHtml = `
+                                        <div class="col">
+                                            <div class="card h-100 s_card_style_3">
+                                                <div class="d_product_box d-flex position-relative h-100 text-center">
+                                                    <div class="tp-actions d-flex">
+                                                        <i data-bs-toggle="tooltip" data-placement="bottom" class="dri mt-2 dri-eye tp-action-icon tp-cursor-pointer text-center border rounded-circle d_product_quick_view" title="Quick View" data-product-template-id="${product.id}"></i>
+                                                    </div>
+                                                    <div class="overflow-hidden d_img_block position-relative d-flex justify-content-center">
+                                                        <a href="${product.url}"><img loading="lazy" alt="${product.name}" src="${product.image_link}" class="img img-fluid d-product-img"/></a>
+                                                    </div>
+                                                    <div class="d_product_info p-3">
+                                                        <div class="d_product_info_lev_2">
+                                                            <p class="mb-0 undefined">
+                                                                <a href="#"><small class="dr_category_lable mb-0">${product.internal_ref}</small></a>
+                                                            </p>
+                                                            <h5 class="card-title mt-1 mb-1 text-truncate fw-light d-product-name">
+                                                                <a href="${product.url}">${product.name}</a>
+                                                            </h5>
+                                                            <div class="d-product-price h6 undefined">
+                                                               <span class="d-inline-block mb-0 fw-light text-primary h6">${product.price} AED</span>
+                                                            </div>
+        
+                                                                <form action="/shop/cart/update" method="post" itemscope="itemscope" itemtype="http://schema.org/Product">
+                                                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" t-nocache="The csrf token must always be up to date."/>
+                                                                    <input type="hidden" name="product_id" class="product-id" value="${product.id}"/>
+                                                                    <div class="d-add_to_cart_block mt-1">
+        
+                                                                    <button role="button" id="add_to_cart" data-animation-selector=".product_detail_img" class="btn btn-primary w-100 d_action_btn d_add_to_cart_btn" href="#" data-oe-id="6481" data-oe-xpath="/data/xpath[10]/a[1]" data-oe-model="ir.ui.view" data-oe-field="arch">
+                                                                        <i class="d_action_btn_icon dri dri-cart"></i> ADD TO CART
+                                                                    </button>
+        
+                                                                    </div>
+                                                                </form>
+        
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `;  
+                                            productsRow.insertAdjacentHTML('beforeend', productHtml);
+                                            console.log(count)
+                                            count ++
+                                        }   
+
+                                });
+                            } else {
+                                console.error('No data received or data format is incorrect.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching frequently bought together data:', error);
+                        });
+                    } else {
+                        console.error('Product ID is not defined.');
+                    }
+                });
+
+            </script>
+
+        </template>
+
+
+    
+</odoo>

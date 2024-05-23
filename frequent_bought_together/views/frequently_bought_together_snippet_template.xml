@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="product_snippets" inherit_id="website.snippets"
+              priority="8">
+        <xpath expr="//div[@id='snippet_effect']//t[@t-snippet][last()]"
+               position="after">
+            <t t-snippet="frequent_bought_together.frequently_bought_together_templates"
+               t-thumbnail="/frequent_bought_together/static/src/img/snippets_options/fbt.png"/>
+        </xpath>
+    </template>
+</odoo>

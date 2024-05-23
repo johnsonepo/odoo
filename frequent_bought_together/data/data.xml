@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Define the cron job -->
+    <record id="ir_cron_frequently_bought_products" model="ir.cron">
+        <field name="name">Cron: Frequently Bought Products</field>
+        <field name="model_id" ref="model_cron_frequently_bought_products"/>
+        <field name="interval_number">1</field> <!-- Adjust as needed -->
+        <field name="interval_type">days</field> <!-- Adjust as needed -->
+        <field name="numbercall">-1</field> <!-- Run indefinitely -->
+        <field name="doall" eval="False"/>
+        <field name="active" eval="True"/>
+    </record>
+
+    <!-- Define the model -->
+    <record id="model_cron_frequently_bought_products" model="ir.model">
+        <field name="name">Cron Frequently Bought Products</field>
+        <field name="model">cron.frequently.bought.products</field>
+        <field name="info">Cron Job to Find Frequently Bought Products</field>
+    </record>
+</odoo>
