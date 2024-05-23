@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="tabby_payment.payment_provider_tabby" model="payment.provider">
+            <field name="name">Tabby Payment</field>
+            <field name="code">tabby</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="tabby_merchant_id">Tabby Merchant Code</field>
+            <field name="tabby_public_key">Tabby Public Key</field>
+            <field name="image_128" type="base64" file="tabby_payment/static/src/img/icon.png"/>
+            <field name="redirect_form_view_id" ref="tabby_payment.tabby_provider_button"/>
+            <field name="pre_msg"><![CDATA[
+<p>You will be redirected to the Tabby website after clicking on the payment button.</p>]]></field>
+            <field name="module_id" ref="base.module_tabby_payment"/>
+            <field name="merchant_name">Tabby Merchant Name</field>
+        </record>
+
+        <record id="payment_method_tabby" model="account.payment.method">
+            <field name="name">Tabby Payment</field>
+            <field name="code">tabby</field>
+            <field name="payment_type">inbound</field>
+        </record>
+    </data>
+</odoo>

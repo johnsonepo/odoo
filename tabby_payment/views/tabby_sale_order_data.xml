@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Search View -->
+    <record id="search_sale_order_by_tabby_data" model="ir.ui.view">
+        <field name="name">search_sale_order_by_tabby_data</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="tabby_data" string="Tabby Data"/>
+                <filter string="Tabby Payment" domain="[('tabby_data', '!=', '')]" name="tabby_data_present"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="sale_order_tabby_data" model="ir.ui.view">
+        <field name="name">sale_order_tabby_data</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//page[@name='other_information']" position="inside">
+                    <group>
+                        <group name="tabby_info" string="Tabby Data">
+                            <field name="tabby_data" readonly="1"/>
+                        </group>
+                    </group>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>
