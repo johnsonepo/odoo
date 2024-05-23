@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<odoo>
+     <record id="product_template_sales_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.sales.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="website_sale.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="google_custom_label" widget="many2one_tag"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_variant_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.product_variant.form.custom_label</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='barcode']" position="after">
+                <field name="google_custom_label" widget="many2one_tag"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_google_custom_label_form" model="ir.ui.view">
+        <field name="name">google.custom.label.form</field>
+        <field name="model">google.custom.label</field>
+        <field name="arch" type="xml">
+            <form string="Google Custom Label">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_google_custom_label_tree" model="ir.ui.view">
+        <field name="name">google.custom.label.tree</field>
+        <field name="model">google.custom.label</field>
+        <field name="arch" type="xml">
+            <tree string="Google Custom Labels">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+     <record id="action_google_custom_label" model="ir.actions.act_window">
+        <field name="name">Google Custom Label</field>
+        <field name="res_model">google.custom.label</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_google_custom_label_tree"/>
+        <field name="target">current</field>
+    </record>
+    <record id="menu_google_custom_label" model="ir.ui.menu">
+        <field name="name">Google Custom Label</field>
+        <field name="action" ref="google_custom_label.action_google_custom_label"/>
+        <field name="parent_id" ref="stock.menu_product_in_config_stock"/>
+        <field name="sequence" type="int">10</field> 
+    </record>
+
+
+</odoo>
