@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink,active
+data_product_template_allow_facebook_ads,Product Template: Allow Facebook Ads,model_product_template,base.group_user,1,1,1,1,1
+data_product_template_allow_google_ads,Product Template: Allow Google Ads,model_product_template,base.group_user,1,1,1,1,1
+data_product_template_allow_snapchat_ads,Product Template: Allow Snapchat Ads,model_product_template,base.group_user,1,1,1,1,1
+
